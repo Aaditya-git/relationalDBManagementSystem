@@ -1,4 +1,5 @@
 # Initialise Coloumn Values to be feed in DataBase
+
 rollNumber = "{}"
 registrationId = "E2K{}"
 firstname = "FirstName{}"
@@ -19,8 +20,8 @@ permanantAddress = "ADD{}"
 residentialAddress = "ADD{}"
 tenthCGPA = "null"
 twelthCGPA = "null"
-tenthGrade = 90.4
-twelthGrade = 80.1
+tenthGrade = "{}"
+twelthGrade = "{}"
 firstSemCGPA = 9.1
 secondSemCGPA = 8.4
 thirdSemCGPA = 8.0

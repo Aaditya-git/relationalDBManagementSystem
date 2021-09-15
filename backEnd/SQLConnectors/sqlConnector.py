@@ -3,15 +3,20 @@ import sys
 import mysql.connector
 
 # Add path to Functions
-sys.path.append("../propertyFiles")
+sys.path.append("hardCodedpath/backEnd/propertyFiles")
+sys.path.append("hardCodedpath/backEnd/Processors/Encrypters")
 
 # Import Userdefined Functions
 from EnvironmentVariables import *
+from Encryption import *
+
+# DECRYPT PASSWORD TO OPEN SQL CONNECTION
+decryptedPassword = wrapperDecyptFunction(password)
 
 # EXECUTE COMMAND TO INSERT VALUES
 def executeInsertCommand(command):
     # Open SQL Connection
-    sqlConnector = mysql.connector.connect(host=hostName, user=dbUserName, passwd=password, database=dbName, port=portName)
+    sqlConnector = mysql.connector.connect(host=hostName, user=dbUserName, passwd=decryptedPassword, database=dbName, port=portName)
     mycursor = sqlConnector.cursor()
 
     # Execute Command
@@ -24,26 +29,25 @@ def executeInsertCommand(command):
     returnOneRow = mycursor.fetchone()
 
     # Close the Connection
-    mycursor.close
+    mycursor.close()
 
     # Return one Row
     return returnOneRow
 
-
 # EXECUTE COMMAND TO GET VALUES
 def executeGetCommand(command):
     # Open SQL Connection
-    sqlConnector = mysql.connector.connect(host=hostName, user=dbUserName, passwd=password, database=dbName, port=portName)
+    sqlConnector = mysql.connector.connect(host=hostName, user=dbUserName, passwd=decryptedPassword, database=dbName, port=portName)
     mycursor = sqlConnector.cursor()
 
     # Execute Command
     mycursor.execute(command)
 
     # Fetch from Table and return one Row
-    returnOneRow = mycursor.fetchone()
+    returnOneRow = mycursor.fetchall()
 
     # Close the Connection
-    mycursor.close
+    mycursor.close()
 
     # Return one Row
     return returnOneRow
