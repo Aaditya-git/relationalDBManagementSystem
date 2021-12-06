@@ -5,62 +5,66 @@ import random
 import pandas as pd
 from pandas import DataFrame
 
-# APPENDING PATH FOR IMPORTING Libraries
-sys.path.append("C:\\Users\\lenovo\\data structure in python\\BE project\\relationalDBManagementSystem\\backEnd\\propertyFiles")
-sys.path.append("C:\\Users\\lenovo\\data structure in python\\BE project\\relationalDBManagementSystem\\backEnd\\SQLConnectors")
-sys.path.append("C:\\Users\\lenovo\\data structure in python\\BE project\\relationalDBManagementSystem\\backEnd\\Processors\\Encrypters")
-sys.path.append("C:\\Users\\lenovo\\data structure in python\\BE project\\relationalDBManagementSystem\\backEnd\\Processors\\SendEmailNotification")
-sys.path.append("C:\\Users\\lenovo\\data structure in python\\BE project\\relationalDBManagementSystem\\backEnd\\DummyDataGenerate")
-
 # Importing User defined Modules
-from sqlConnector import *
-from dummyDataPayload import *
-# from encryDecryFn import fillEnctryptedValues
-from utility import *
-from sendEmail import sendMailUsingSMTP
+from backEnd.SQLConnectors.sqlConnector import *
+from backEnd.DummyDataGenerate.dummyDataPayload import *
 
-def fillEnctryptedValues(reqPiilist):
+from backEnd.Utilities.utility import *
+from backEnd.Utilities.SendEmailNotification.sendEmail import sendMailUsingSMTP
 
-    encrypted = []
+# THIS FUNCTION WILL RETURN ENCRYPTED VALUES FOR PII DATA FOR DUMMY DATA
+def getEnctryptedValuesForPII(reqPIIList):
+
+    encryptedPIIData = []
 
     # GO THOUGH LOOP OF COLOUMNS AND ENCRYPT VALUES
-    for index, colvalue in enumerate(reqPiilist):
+    for index, colValue in enumerate(reqPIIList):
 
         # GET ENCRYPTED VALUE OF COLOUMN FROM PIIDATA
-        encryptedValue = wrapperEncryptFunction(colvalue)
+        encryptedPIIValue = wrapperEncryptFunction(colValue)
 
         # APPEND IT TO ENCRYPTED ARRAY
-        encrypted.append(encryptedValue)
+        encryptedPIIData.append(encryptedPIIValue)
 
 
-    return encrypted
+    return encryptedPIIData
 
-def getStudentDetailsCSV(reqColss):
+# THIS FUNCTION WILL CREATE A CSV FILE AT A FIXED LOCATION WITH THE STUDENT DETAILS
+def getStudentDetailsCSV(coloumnsRequestedFromWeb):
 
-    coloumnToBeFetched=getAllColoumnstoFetch(reqColss)
+    # This variable will contain all coloumns - FIXED + REQUESTED
+    coloumnToBeFetched=getAllColoumnstoFetch(coloumnsRequestedFromWeb)
+
     reqColStr = getListOfStrings(coloumnToBeFetched)
+
+    # Get the List of Interested Students from CSV provided as INPUT
     interestedStudents = setInterestedStudentsFromCSV()
 
+    # Store a Query to be Executed to fetch the Coloumns from DB for Interested Students
     executeSQ = selectQuery.format(reqColStr,tableName,interestedStudents)
     resoverall = executeGetCommand(executeSQ)
 
+    # Create a DataFrame of the returned result
     EncryptedDataFrame = DataFrame(resoverall,columns = coloumnToBeFetched)
 
     decryptedDataFrame = EncryptedDataFrame
+
+    # LOOP over DataFrame from DB to decrypt the encrypted values in DB
     for rowIndex, row in EncryptedDataFrame.iterrows():
+
         for colIndex,col in enumerate(coloumnToBeFetched):
 
             if col in piicolumnName:
-            # print('this rowIndex{} colIndex{} elemetn {}'.format(rowIndex,colIndex,col))
+
                 decryptedDataFrame.iloc[rowIndex,colIndex] = wrapperDecyptFunction(row[col])
             else:
+
                 decryptedDataFrame.iloc[rowIndex,colIndex] = row[col]
 
     # Release Memory
     EncryptedDataFrame = DataFrame()
-    # print(EncryptedDataFrame)
-    # print(decryptedDataFrame)
-    decryptedDataFrame.to_csv('C:\\Users\\lenovo\\data structure in python\\BE project\\relationalDBManagementSystem\\backEnd\\outputs\\StudentDetails.csv')
+
+    decryptedDataFrame.to_csv('backEnd\\outputs\\StudentDetails.csv')
     print(decryptedDataFrame)
 
 def insertDummyData():
@@ -150,8 +154,6 @@ def insertDummyData():
 if __name__ == '__main__':
     # insertDummyData()
     # getStudentDetailsCSV()
-    path = "C:\\Users\\lenovo\\data structure in python\\BE project\\relationalDBManagementSystem\\backEnd\\output\\StudentDetails.csv"
-
     # insertDummyData()
     # getStudentDetailsCSV(inputFields)
     # sendMailUsingSMTP()

@@ -5,16 +5,17 @@ import random
 import string
 import pandas as pd
 import sys
-from Names import *
 import os
 import shutil
+
+
+from backEnd.propertyFiles.Names import *
 from django.core.files.storage import FileSystemStorage
 #===================================================================
 #========================== Paths ================================
 #===================================================================
 
-sys.path.append("C:\\Users\\lenovo\\data structure in python\\BE project\\relationalDBManagementSystem\\backEnd\\propertyFiles")
-from EnvironmentVariables import RENAMED,InputFolderPath,MandatoryDataToBeSent
+from backEnd.propertyFiles.EnvironmentVariables import RENAMED,InputFolderPath,MandatoryDataToBeSent
 
 #=================================================================
 #================== PII Data Generation ==========================

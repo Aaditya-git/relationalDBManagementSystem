@@ -1,14 +1,12 @@
 
 # Importing Builtin Libraries
 import sys
-sys.path.append("../../propertyFiles")
-sys.path.append("../../SecretFiles")
 from cryptography.fernet import Fernet
-
 # Importing User defined Modules
-from EnvironmentVariables import *
+from backEnd.propertyFiles.EnvironmentVariables import decreptionKey
 
-pathToDecryptionKey = "../SecretFiles/decryptionKey.key"
+# pathToDecryptionKey = "../SecretFiles/decryptionKey.key"
+
 # def write_key():
 #     """
 #     Generates a key and save it into a file
@@ -24,6 +22,7 @@ def load_key():
     """
     # return open(pathToDecryptionKey, "rb").read()
     return decreptionKey
+
 # ENCRYPT PII COLOUMN VALUE
 def encrypt(coloumnValue, key):
     EncodedData = coloumnValue.encode()
