@@ -17,6 +17,6 @@ It is Open Source Project and you're welcome to contribute to it.
 Read the License for more details. 
 
 Want to Contribute?? 
-1. Email - aditya134@gmail.com 
+1. Email - aadityab134@gmail.com 
 2. LinkedIn - https://www.linkedin.com/in/aadityabhilegaonkar/
 3. Instagram - https://www.instagram.com/aadityabh 

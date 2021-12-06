@@ -1,21 +1,29 @@
 #IMPORTING BUILT IN PACKAGES
 import sys
 from pandas import DataFrame
-sys.path.append("hardCodedpath/backEnd/propertyFiles")
+
+
 # sys.path.append("../Encrypters")
-sys.path.append("hardCodedpath/DummyDataGeneration")
-sys.path.append("hardCodedpath/SQLConnectors")
+sys.path.append("../../DummyDataGenerate")
+sys.path.append("../backEnd/SQLConnectors")
 
+# print(sys.path)
 # Import Userdefined Functions
-from EnvironmentVariables import *
-from dummyDataPayload import *
-from sqlConnector import executeGetCommand
+# from EnvironmentVariables import *
+from DummyDataGeneration import *
+# from sqlConnector import *
 
 
 
-selectQuery = "SELECT {} FROM {}".format(piiColoumnNames,tableName)
-resoverall = executeGetCommand(selectQuery)
-df = DataFrame(resoverall)
-# df.columns = resoverall.keys()
-
-print(df)
+# selectQuery = "SELECT {} FROM {}".format(piiColoumnNames,tableName)
+# resoverall = executeGetCommand(selectQuery)
+# EncryptedDataFrame = DataFrame(resoverall)
+# decryptedDataFrame = EncryptedDataFrame
+# for rowIndex, row in EncryptedDataFrame.iterrows():
+#     for colIndex,col in enumerate(row):
+#         # print('this rowIndex{} colIndex{} elemetn {}'.format(rowIndex,colIndex,col))
+#         decryptedDataFrame.iloc[rowIndex,colIndex] = wrapperDecyptFunction(col)
+# # Release Memory
+# EncryptedDataFrame = DataFrame()
+# print(decryptedDataFrame)
+# decryptedDataFrame.to_csv('../FileParsers/DecryptedCSV.csv')

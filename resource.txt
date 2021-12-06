@@ -1,0 +1,3 @@
+Start Django Server - django-admin startproject mysite
+Run Server - cd to relationalDBManagement
+              python manage.py runserver

@@ -8,7 +8,7 @@ from cryptography.fernet import Fernet
 # Importing User defined Modules
 from EnvironmentVariables import *
 
-
+pathToDecryptionKey = "../SecretFiles/decryptionKey.key"
 # def write_key():
 #     """
 #     Generates a key and save it into a file
@@ -22,23 +22,23 @@ def load_key():
     """
     Loads the key from the current directory named `key.key`
     """
-    return open(pathToDecryptionKey, "rb").read()
-
+    # return open(pathToDecryptionKey, "rb").read()
+    return decreptionKey
 # ENCRYPT PII COLOUMN VALUE
 def encrypt(coloumnValue, key):
     EncodedData = coloumnValue.encode()
-    f = Fernet(key)
+    fernetObject = Fernet(key)
     # encrypt data
-    encrypted_data = f.encrypt(EncodedData)
+    encrypted_data = fernetObject.encrypt(EncodedData)
 
     return encrypted_data.decode()
 
 # DECRYPT PII COULOMN VALUE
-def decrypt(encryptedData, key):
-    f = Fernet(key)
+def decrypt(encryptedData,key):
+    fernetObject = Fernet(key)
 
     # decrypt data
-    decrypted_data = f.decrypt(encryptedData)
+    decrypted_data = fernetObject.decrypt(encryptedData)
 
     return decrypted_data
 
