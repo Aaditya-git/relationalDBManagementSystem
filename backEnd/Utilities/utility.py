@@ -8,31 +8,34 @@ import sys
 import os
 import shutil
 
+# ==============================================================
+# ======================= USER IMPORTS =========================
+# ==============================================================
 
 from backEnd.propertyFiles.Names import *
 from django.core.files.storage import FileSystemStorage
-from backEnd.propertyFiles.EnvironmentVariables import FILE_NAME_OF_FILE_TOBE_PARSED,INPUT_FOLDER_PATH,MANDATORY_COL_TO_BE_SENT
+from backEnd.propertyFiles.EnvironmentVariables import FILE_NAME_OF_FILE_TOBE_PARSED,INPUT_FOLDER_PATH,MANDATORY_COL_TO_BE_SENT,INTERESTED_STUDENTS_FILE_PATH
 
 #=================================================================
 #================== PII Data Generation ==========================
 #=================================================================
 def getFirstname():
-    MaleFirstName = random.choice(MaleName)
-    FemaleFirstName = random.choice(FemaleName)
+    MaleFirstName = random.choice(MALE_NAME_LIST)
+    FemaleFirstName = random.choice(FEMALE_NAME_LIST)
     ChoiceOfName = [MaleFirstName,FemaleFirstName]
     FinalFirstNameChoice = random.choice(ChoiceOfName)
     return FinalFirstNameChoice
 
 def getFatherName():
-    FatherName = random.choice(MaleName)
+    FatherName = random.choice(MALE_NAME_LIST)
     return FatherName
 
 def getMotherName():
-    MotherNameSelection = random.choice(FemaleName)
+    MotherNameSelection = random.choice(FEMALE_NAME_LIST)
     return MotherNameSelection
 
 def getSurname():
-    SurName = random.choice(lastName)
+    SurName = random.choice(LAST_NAME_LIST)
     return SurName
 
 #===================================================================
@@ -76,7 +79,7 @@ def getListOfStrings(list):
 def setInterestedStudentsFromCSV():
     list = []
     toConvertToString="'{}'"
-    dg = pd.read_csv("C:/Users/lenovo/data structure in python/BE project/relationalDBManagementSystem/relationalDataBaseManagement/input/InterestedStudents.csv")
+    dg = pd.read_csv(INTERESTED_STUDENTS_FILE_PATH)
     for index, row in dg.iterrows():
         list.append(toConvertToString.format(row[0]))
     return getListOfStrings(list)

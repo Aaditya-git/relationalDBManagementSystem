@@ -11,7 +11,7 @@ from backEnd.DummyDataGenerate.dummyDataPayload import *
 from backEnd.propertyFiles.EnvironmentVariables import *
 from backEnd.Utilities.utility import *
 from backEnd.Utilities.SendEmailNotification.sendEmail import sendMailUsingSMTP
-from backEnd.Processors.Encrypters.Encryption import wrapperEncryptFunction
+from backEnd.Processors.Encrypters.Encryption import wrapperEncryptFunction, wrapperDecyptFunction
 
 # THIS FUNCTION WILL RETURN ENCRYPTED VALUES FOR PII DATA FOR DUMMY DATA
 def getEnctryptedValuesForPII(reqPIIList):
@@ -42,7 +42,7 @@ def getStudentDetailsCSV(coloumnsRequestedFromWeb):
     interestedStudents = setInterestedStudentsFromCSV()
 
     # Store a Query to be Executed to fetch the Coloumns from DB for Interested Students
-    executeSQ = selectQuery.format(reqColStr,tableName,interestedStudents)
+    executeSQ = SELECT_QUERY.format(reqColStr,TABLE_NAME,interestedStudents)
     resoverall = executeGetCommand(executeSQ)
 
     # Create a DataFrame of the returned result
@@ -55,7 +55,7 @@ def getStudentDetailsCSV(coloumnsRequestedFromWeb):
 
         for colIndex,col in enumerate(coloumnToBeFetched):
 
-            if col in piicolumnName:
+            if col in PII_COL_LIST:
 
                 decryptedDataFrame.iloc[rowIndex,colIndex] = wrapperDecyptFunction(row[col])
             else:
@@ -65,8 +65,7 @@ def getStudentDetailsCSV(coloumnsRequestedFromWeb):
     # Release Memory
     EncryptedDataFrame = DataFrame()
 
-    decryptedDataFrame.to_csv('backEnd\\outputs\\StudentDetails.csv')
-    print(decryptedDataFrame)
+    decryptedDataFrame.to_csv(PATH_TO_CSV_FILE)
 
 def getLowerUpperBounds():
         # COMMAND TO GET LOWERBOUND
@@ -138,7 +137,7 @@ def insertDummyData():
 
             # INITIALISE 42 COLOUMNS LENTH STRING TO FILL UP VALUES
             templateString = """("{}",{},"{}","{}","{}","{}","{}","{}","{}","{}",{},{},{},{},"{}","{}","{}","{}",{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{})"""
-            commandString = commandString + templateString.format(registrationId.format(id[regisId].format(registrationNo)),int(rollNumber.format(rollnumberid)),encrypted[0],encrypted[1],encrypted[2],
+            commandString = commandString + templateString.format(registrationId.format(ID[regisId].format(registrationNo)),int(rollNumber.format(rollnumberid)),encrypted[0],encrypted[1],encrypted[2],
                                                                   encrypted[3],encrypted[4],encrypted[5],encrypted[6],nationality,isAadhar,isPAN,isPassport,isIndian,
                                                                   fathersName.format(MiddleName),mothersName.format(MotherInitial),encrypted[7],encrypted[8],
                                                                   tenthCGPA,twelthCGPA,tenthGrade.format(RandomGrade_10),twelthGrade.format(RandomGrade_12),firstSemCGPA.format(firstCGPA),secondSemCGPA.format(secondCGPA),
@@ -161,8 +160,6 @@ def insertDummyData():
 
 if __name__ == '__main__':
     pass
-    insertDummyData()
-    # getStudentDetailsCSV()
     # insertDummyData()
-    # getStudentDetailsCSV(inputFields)
+    # getStudentDetailsCSV(["fifthSemCGPA"])
     # sendMailUsingSMTP()

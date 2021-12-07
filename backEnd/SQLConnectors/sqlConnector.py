@@ -1,8 +1,14 @@
 # Import Builtin Packges
 import sys
 import mysql.connector
+
+
+# ==============================================================
+# ======================= USER IMPORTS =========================
+# ==============================================================
 from backEnd.propertyFiles.EnvironmentVariables import HOST_NAME,DB_USER_NAME,DB_NAME,PORT_NAME,PASSWORD
 from backEnd.Processors.Encrypters.Encryption import wrapperDecyptFunction
+
 # DECRYPT PASSWORD TO OPEN SQL CONNECTION
 decryptedPassword = wrapperDecyptFunction(PASSWORD)
 

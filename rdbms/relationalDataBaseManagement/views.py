@@ -2,18 +2,16 @@ import sys
 import os
 import shutil
 
-sys.path.append('C:\\Users\\lenovo\\data structure in python\\BE project\\relationalDBManagementSystem')
-sys.path.append('C:\\Users\\lenovo\\data structure in python\\BE project\\relationalDBManagementSystem\\relationalDataBaseManagement\\relationalDataBaseManagement')
-
+# ==============================================================
+# ======================= USER IMPORTS =========================
+# ==============================================================
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from backEnd.DummyDataGenerate.DummyDataGeneration import getStudentDetailsCSV
-from backEnd.Processors.SendEmailNotification.sendEmail import sendMailUsingSMTP,sendMailUsingSMTPToUser
-from settings import *
-from backEnd.propertyFiles.utility import deleteFilesInFolder,renameFile,saveFile,getListOfStrings
-from EnvironmentVariables import InputFolderPath
-
-
+from backEnd.Utilities.SendEmailNotification.sendEmail import sendMailUsingSMTP,sendMailUsingSMTPToUser
+from rdbms.relationalDataBaseManagement.settings import *
+from backEnd.Utilities.utility import deleteFilesInFolder,renameFile,saveFile,getListOfStrings
+from backEnd.propertyFiles.EnvironmentVariables import INPUT_FOLDER_PATH
 
 
 def home(request):
@@ -23,7 +21,7 @@ def index(request):
     if request.method=="POST" and request.FILES["studentIds"]:
 
         # DELETE EXISTING FILES BEFORE SAVING NEW FILES
-        deleteFilesInFolder(InputFolderPath)
+        deleteFilesInFolder(INPUT_FOLDER_PATH)
 
         # TAKE INPUTS FROM HTML FROM A POST CALL
         inputFields = request.POST.getlist('inputFields')
