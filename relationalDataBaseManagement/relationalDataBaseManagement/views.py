@@ -14,8 +14,6 @@ from backEnd.propertyFiles.utility import deleteFilesInFolder,renameFile,saveFil
 from EnvironmentVariables import InputFolderPath
 
 
-
-
 def home(request):
     return(render(request, "home.html", {"text":"home"}))
 

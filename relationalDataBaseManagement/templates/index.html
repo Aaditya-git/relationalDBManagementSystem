@@ -2,12 +2,15 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>TNP Made Easy</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'index.css' %}"/>
   </head>
   <body>
 <form class="" action="" method="post" enctype="multipart/form-data">
   {% csrf_token %}
 <input type="file" name="studentIds" value="studentIds">
+
   <div class="form-check">
     <input type="checkbox" name="inputFields" value="fathersName" id="fathersName">
     <label for="fathersName">Fathers Name</label>
@@ -70,7 +73,8 @@
   </div>
 <input type="text" name="email" value="Enter Email for details">
 <br>
-<button type="submit" name="submit">Get Student Details</button>
+<button class="btn"  type="submit" name="submit">Get Student Details</button>
 </form>
   </body>
 </html>
+<!-- C:\\Users\\lenovo\\data structure in python\\BE project\\relationalDBManagementSystem\\relationalDataBaseManagement\\FrontEnd\\CSS\\index.css -->
