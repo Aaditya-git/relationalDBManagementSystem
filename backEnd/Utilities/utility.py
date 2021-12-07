@@ -11,11 +11,7 @@ import shutil
 
 from backEnd.propertyFiles.Names import *
 from django.core.files.storage import FileSystemStorage
-#===================================================================
-#========================== Paths ================================
-#===================================================================
-
-from backEnd.propertyFiles.EnvironmentVariables import RENAMED,InputFolderPath,MandatoryDataToBeSent
+from backEnd.propertyFiles.EnvironmentVariables import FILE_NAME_OF_FILE_TOBE_PARSED,INPUT_FOLDER_PATH,MANDATORY_COL_TO_BE_SENT
 
 #=================================================================
 #================== PII Data Generation ==========================
@@ -86,7 +82,7 @@ def setInterestedStudentsFromCSV():
     return getListOfStrings(list)
 
 def getAllColoumnstoFetch(appendList):
-    return MandatoryDataToBeSent + appendList
+    return MANDATORY_COL_TO_BE_SENT + appendList
 
 #===================================================================
 #================== File Related Operations =======================
@@ -101,10 +97,10 @@ def deleteFilesInFolder(path):
                 shutil.rmtree(os.path.join(root, d))
 
 def renameFile():
-    folder = InputFolderPath
+    folder = INPUT_FOLDER_PATH
     for count, filename in enumerate(os.listdir(folder)):
         src =f"{folder}/{filename}"  # foldername/filename, if .py file is outside folder
-        dst =f"{folder}/{RENAMED}"
+        dst =f"{folder}/{FILE_NAME_OF_FILE_TOBE_PARSED}"
     os.rename(src, dst)
 
 def saveFile(inputFileObject,fileLocation):

@@ -23,8 +23,8 @@ isIndian,fathersName,mothersName,permanantAddress,residentialAddress,tenthCGPA,t
 thirdSemCGPA,fourthSemCGPA,fifthSemCGPA,sixthSemCGPA,seventhSemCGPA,eightthSemGCPA,isDiploma,diplomaMarks,isBacklog,numberOfBacklogs,activeBacklog,\
 PassiveBacklog,isYD,YDYears,isEducationGap,educationGapYears,isPICTStudent,currentBatch"
 
-PII_COL_STRING = "firstname,surname,email,aadhar,PAN,passport,mobileNumber,permanantAddress,residentialAddress"
-PII_COL_LIST = ['firstname','surname','email','aadhar','PAN','passport','mobileNumber','permanantAddress','residentialAddress']
+PII_COL_STRING = "firstname,surname,email,mobileNumber,aadhar,PAN,passport,permanantAddress,residentialAddress"
+PII_COL_LIST = ['firstname','surname','email','mobileNumber','aadhar','PAN','passport','permanantAddress','residentialAddress']
 
 MANDATORY_COL_TO_BE_SENT = ["registrationId","rollNumber","firstname","surname"]
 
@@ -44,13 +44,13 @@ SELECT_QUERY = "SELECT {} FROM {} WHERE registrationId in ({})"
 NUMBER_OF_DUMMY_DATA_TOBE_INSERTED = 100
 
 # number of characters in the PrefixEmail string.
-maxLengthOfPrefixEmail = 9
-maxMobileLen = 10
-maxAadharlen = 14
-maxPanlen = 10
-maxPassLen = 8
-maxReglen = 5
-maxAddlen = 10
+EMAIL_PREFIX_LENGTH = 9
+MOBILE_LENGTH = 10
+AADHAR_LENGTH = 14
+PAN_LENGTH = 10
+PASSPORT_LENGTH = 8
+REGISTRATION_NUMBER_LENGTH = 5
+ADDRESS_LENGTH = 10
 
 
 # ==============================================================
@@ -70,7 +70,7 @@ emailNotificationAPIKey = "SG.ZoDztxzMQP-iBSyCA-2H6Q.Vq0bV47xBEhJjHZG1lCjuzNb3no
 #================================================================
 #============== FILE OPERATIONS RELATED PRPERTIES ===============
 #================================================================
-FILE_NAME_OF_PARSED_FILE = "InterestedStudents.csv"
+FILE_NAME_OF_FILE_TOBE_PARSED = "InterestedStudents.csv"
+INPUT_DIR_PATH = "relationalDataBaseManagement/input"
 
-
-InputFolderPath = BASE_DIR + relationalDataBaseManagement/input"
+INPUT_FOLDER_PATH = BASE_DIR + INPUT_DIR_PATH

@@ -11,7 +11,6 @@ def getBaseDir():
     flag = True
     for path in sys.path:
         possibleProjectName = path.split("\\")[-1]
-        print(possibleProjectName)
         if (PROJECT_NAME==possibleProjectName):
             BASE_DIR = path
             flag = False

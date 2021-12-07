@@ -6,11 +6,12 @@ import pandas as pd
 from pandas import DataFrame
 
 # Importing User defined Modules
-from backEnd.SQLConnectors.sqlConnector import *
+from backEnd.SQLConnectors.sqlConnector import executeGetCommand, executeInsertCommand
 from backEnd.DummyDataGenerate.dummyDataPayload import *
-
+from backEnd.propertyFiles.EnvironmentVariables import *
 from backEnd.Utilities.utility import *
 from backEnd.Utilities.SendEmailNotification.sendEmail import sendMailUsingSMTP
+from backEnd.Processors.Encrypters.Encryption import wrapperEncryptFunction
 
 # THIS FUNCTION WILL RETURN ENCRYPTED VALUES FOR PII DATA FOR DUMMY DATA
 def getEnctryptedValuesForPII(reqPIIList):
@@ -67,20 +68,26 @@ def getStudentDetailsCSV(coloumnsRequestedFromWeb):
     decryptedDataFrame.to_csv('backEnd\\outputs\\StudentDetails.csv')
     print(decryptedDataFrame)
 
-def insertDummyData():
+def getLowerUpperBounds():
         # COMMAND TO GET LOWERBOUND
-        getLowerBoundCmd = getLowerBound.format(tableName)
+        getLowerBoundCmd = GET_LOWER_BOUND_QUERY.format(TABLE_NAME)
 
         # GET LOWERBOUND
         maxValueInDB = executeGetCommand(getLowerBoundCmd)
-        # print('max value is {}'.format(maxValueInDB))
 
         # RETURNS A TUPLE - GET FIRST ELEMENT
         if maxValueInDB[0][0] == None:
             lowerBound = 0
         else:
             lowerBound = maxValueInDB[0][0] + 1
-        upperBound = lowerBound + numberofDummyDataToBeInserted
+        upperBound = lowerBound + NUMBER_OF_DUMMY_DATA_TOBE_INSERTED
+        return [lowerBound,upperBound]
+
+def insertDummyData():
+
+        bounds = getLowerUpperBounds()
+        lowerBound = bounds[0]
+        upperBound = bounds[1]
 
         # Get command Executed
         commandString = ""
@@ -94,14 +101,14 @@ def insertDummyData():
             firstnameid = firstname.format(getFirstname())
             surnameid = surname.format(getSurname())
             rollnumberid = rollNumber.format(getRollno())
-            registrationNo = registrationId.format(getRandomNum(maxReglen))
-            emailid = email.format(getRandomAlphaNum(maxLengthOfPrefixEmail))
-            aadharid = aadhar.format(getRandomNum(maxAadharlen))
-            mobileid = mobileNumber.format(getRandomNum(maxMobileLen))
-            panid = PAN.format(getRandomAlphaNum(maxPanlen))
-            passid = passport.format(getRandomAlphaNum(maxPassLen))
-            perAdd = permanantAddress.format(getAddress(maxAddlen))
-            resAdd = residentialAddress.format(getAddress(maxAddlen))
+            registrationNo = registrationId.format(getRandomNum(REGISTRATION_NUMBER_LENGTH))
+            emailid = email.format(getRandomAlphaNum(EMAIL_PREFIX_LENGTH))
+            aadharid = aadhar.format(getRandomNum(AADHAR_LENGTH))
+            mobileid = mobileNumber.format(getRandomNum(MOBILE_LENGTH))
+            panid = PAN.format(getRandomAlphaNum(PAN_LENGTH))
+            passid = passport.format(getRandomAlphaNum(PASSPORT_LENGTH))
+            perAdd = permanantAddress.format(getAddress(ADDRESS_LENGTH))
+            resAdd = residentialAddress.format(getAddress(ADDRESS_LENGTH))
 
             # Selecting 10th and 12 th Grade
             RandomGrade_10 = getMarks()
@@ -122,21 +129,21 @@ def insertDummyData():
             regisId = getRegistrationId()
 
             # INITIALISE EMPTY ENCRYPTED ARRAY TO STORE ENCRYPTED VALUES OF 9 COLOUMNS
-            reqPiilist = []
-            reqPiilist.append(firstnameid)
+            reqPIIList = []
+            reqPIIList.append(firstnameid)
 
-            reqPiilist.extend((surnameid,rollnumberid,registrationNo,emailid,aadharid,mobileid,panid,passid,perAdd,resAdd))
+            reqPIIList.extend((surnameid,emailid,mobileid,aadharid,panid,passid,perAdd,resAdd))
 
-            encrypted = fillEnctryptedValues(reqPiilist)
+            encrypted = getEnctryptedValuesForPII(reqPIIList)
 
             # INITIALISE 42 COLOUMNS LENTH STRING TO FILL UP VALUES
-            templateString = """({},"{}","{}","{}","{}","{}","{}",{},"{}",{},"{}",{},"{}",{},"{}","{}","{}","{}",{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{})"""
-            commandString = commandString + templateString.format(int(rollNumber.format(rollnumberid)),registrationId.format(id[regisId].format(registrationNo)),encrypted[0],encrypted[1],
-                                                                  fathersName.format(MiddleName),mothersName.format(MotherInitial),encrypted[4],isAadhar,encrypted[3],
-                                                                  isPAN,encrypted[7],isPassport,encrypted[8],isIndian,nationality,encrypted[6],
-                                                                  encrypted[9],encrypted[10],tenthCGPA,twelthCGPA,tenthGrade.format(RandomGrade_10),twelthGrade.format(RandomGrade_12),firstSemCGPA.format(firstCGPA),secondSemCGPA.format(secondCGPA),
-                                                                  thirdSemCGPA.format(thirdCGPA),fourthSemCGPA.format(fourthCGPA),fifthSemCGPA.format(fifthCGPA),sixthSemCGPA.format(sixthCGPA),seventhSemCGPA,eightthSemGCPA,isDiploma,diplomaMarks,isBacklog,numberOfBacklogs,activeBacklog,
-                                                                  PassiveBacklog,isYD,YDYears,isEducationGap,educationGapYears,isPICTStudent,currentBatch)
+            templateString = """("{}",{},"{}","{}","{}","{}","{}","{}","{}","{}",{},{},{},{},"{}","{}","{}","{}",{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{})"""
+            commandString = commandString + templateString.format(registrationId.format(id[regisId].format(registrationNo)),int(rollNumber.format(rollnumberid)),encrypted[0],encrypted[1],encrypted[2],
+                                                                  encrypted[3],encrypted[4],encrypted[5],encrypted[6],nationality,isAadhar,isPAN,isPassport,isIndian,
+                                                                  fathersName.format(MiddleName),mothersName.format(MotherInitial),encrypted[7],encrypted[8],
+                                                                  tenthCGPA,twelthCGPA,tenthGrade.format(RandomGrade_10),twelthGrade.format(RandomGrade_12),firstSemCGPA.format(firstCGPA),secondSemCGPA.format(secondCGPA),
+                                                                  thirdSemCGPA.format(thirdCGPA),fourthSemCGPA.format(fourthCGPA),fifthSemCGPA.format(fifthCGPA),sixthSemCGPA.format(sixthCGPA),seventhSemCGPA,eightthSemGCPA,
+                                                                  isDiploma,diplomaMarks,isBacklog,numberOfBacklogs,activeBacklog,PassiveBacklog,isYD,YDYears,isEducationGap,educationGapYears,isPICTStudent,currentBatch)
 
             # ADD COMMA AFTER EVERY ROW BUT LAST ONE
             if(rowValue<upperBound-1):
@@ -144,15 +151,17 @@ def insertDummyData():
             else:
                 commandString = commandString + ";"
 
-        # print(insertData.format(tableName,coloumnNames,commandString))
+        # print(INSERT_DATA_QUERY.format(TABLE_NAME,COLOUMN_NAMES,commandString))
 
         # Execute Command to Insert Values
-        result = executeInsertCommand(insertData.format(tableName,coloumnNames,commandString))
+        result = executeInsertCommand(INSERT_DATA_QUERY.format(TABLE_NAME,COLOUMN_NAMES,commandString))
 
         # Sample of Rows inserted
-        print("Total rows inserted {}".format(numberofDummyDataToBeInserted))
+        print("Total rows inserted {}".format(NUMBER_OF_DUMMY_DATA_TOBE_INSERTED))
+
 if __name__ == '__main__':
-    # insertDummyData()
+    pass
+    insertDummyData()
     # getStudentDetailsCSV()
     # insertDummyData()
     # getStudentDetailsCSV(inputFields)

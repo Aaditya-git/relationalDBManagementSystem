@@ -3,20 +3,15 @@ import sys
 import base64
 from datetime import date
 
-# Sendgrid Dependencies
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import (Mail, Attachment, FileContent, FileName, FileType, Disposition)
-
 # SMTP Dependencies
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
 from email.mime.text import MIMEText
 import smtplib
 
-sys.path.append('C:\\Users\\lenovo\\data structure in python\\BE project\\relationalDBManagementSystem')
-# from emailProperties import *
-from backEnd.Processors.SendEmailNotification.emailProperties import *
-from backEnd.propertyFiles.utility import getListOfStrings
+
+from backEnd.Utilities.SendEmailNotification.emailProperties import *
+from backEnd.Utilities.utility import getListOfStrings
 
 def sendMailUsingSMTP():
     # Create a multipart message
@@ -30,7 +25,7 @@ def sendMailUsingSMTP():
     # open and read the CSV file in binary
     with open(PATH_TO_CSV_FILE,'rb') as file:
     # Attach the file with filename to the email
-        msg.attach(MIMEApplication(file.read(), Name=FILE_NAME.format(date.today())))
+        msg.attach(MIMEApplication(file.read(), Name=FILE_NAME_TOBE_MAILED.format(date.today())))
 
     # Create SMTP object
     smtp_obj = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
@@ -57,7 +52,7 @@ def sendMailUsingSMTPToUser(userEmail):
     # open and read the CSV file in binary
     with open(PATH_TO_CSV_FILE,'rb') as file:
     # Attach the file with filename to the email
-        msg.attach(MIMEApplication(file.read(), Name=FILE_NAME.format(date.today())))
+        msg.attach(MIMEApplication(file.read(), Name=FILE_NAME_TOBE_MAILED.format(date.today())))
 
     # Create SMTP object
     smtp_obj = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
