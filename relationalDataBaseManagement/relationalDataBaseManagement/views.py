@@ -10,8 +10,9 @@ from django.core.files.storage import FileSystemStorage
 from backEnd.DummyDataGenerate.DummyDataGeneration import getStudentDetailsCSV
 from backEnd.Processors.SendEmailNotification.sendEmail import sendMailUsingSMTP,sendMailUsingSMTPToUser
 from settings import *
-from backEnd.propertyFiles.utility import deleteFilesInFolder,renameFile,saveFile,getListOfStrings
+from backEnd.propertyFiles.utility import deleteFilesInFolder,renameFile,saveFile,getListOfStrings,handleMarks
 from EnvironmentVariables import InputFolderPath
+
 
 
 def home(request):
@@ -24,8 +25,13 @@ def index(request):
         deleteFilesInFolder(InputFolderPath)
 
         # TAKE INPUTS FROM HTML FROM A POST CALL
-        inputFields = request.POST.getlist('inputFields')
         userEmail = request.POST.getlist('email')
+        inputFields = request.POST.getlist('inputFields')
+        companyName = request.POST.getlist('company')
+        # if 'tenthGrade' in inputFields:
+        #     inputFields = inputFields + marks
+        inputFields = handleMarks(inputFields)
+
         inputeCSVFile = request.FILES["studentIds"]
 
         # SAVE CSV FILE TO DESIRED LOCATION
@@ -36,7 +42,7 @@ def index(request):
 
         # SEND EMAIL TO DESIRED EMAIL
         # sendMailUsingSMTP()
-        sendMailUsingSMTPToUser(userEmail)
+        sendMailUsingSMTPToUser(userEmail,companyName[0])
 
         return(render(request, "home.html", {"text":"Your Email was sent to:{}".format(getListOfStrings(userEmail))}))
-    return(render(request, "index.html"))
+    return(render(request, "index2.html"))

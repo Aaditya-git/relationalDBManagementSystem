@@ -1,5 +1,5 @@
-,registrationId,rollNumber,firstname,surname,fathersName
-0,C2K18125119,40093,Nidra,Dhawan,Jatin
-1,E2K18109035,40665,Isaac,Dubey,Rishi
-2,E2K18109757,40121,Lopa,Das,Reyansh
-3,E2K18183804,40949,Ishwar,Edwin,Balvan
+,registrationId,rollNumber,firstname,surname,email,tenthGrade,twelthGrade,firstSemCGPA,secondSemCGPA,thirdSemCGPA,fourthSemCGPA,fifthSemCGPA,sixthSemCGPA
+0,C2K18125119,40093,Nidra,Dhawan,njRB0XGkP@gmail.com,55.9,72.1,6.9,9.1,6.2,7.5,8.7,6.9
+1,E2K18109035,40665,Isaac,Dubey,7I5Zuyk7A@gmail.com,59.9,82.3,8.5,6.2,7.9,6.4,9.8,8.7
+2,E2K18109757,40121,Lopa,Das,xKetYQ93o@gmail.com,69.7,62.2,8.4,7.0,7.6,6.2,7.6,9.0
+3,E2K18183804,40949,Ishwar,Edwin,I31PLHFYJ@gmail.com,63.1,96.9,9.7,7.0,6.4,6.5,7.1,9.5

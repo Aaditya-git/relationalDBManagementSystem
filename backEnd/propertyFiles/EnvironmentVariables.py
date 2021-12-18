@@ -23,6 +23,7 @@ piiColoumnNames = "firstname,surname,email,aadhar,PAN,passport,mobileNumber,perm
 piicolumnName = ['firstname','surname','email','aadhar','PAN','passport','mobileNumber','permanantAddress','residentialAddress']
 reqCols = ['rollNumber','registrationId','firstname','surname','email','mobileNumber']
 MandatoryDataToBeSent = ["registrationId","rollNumber","firstname","surname"]
+marks = ["twelthGrade","firstSemCGPA","secondSemCGPA","thirdSemCGPA","fourthSemCGPA","fifthSemCGPA","sixthSemCGPA"]
 
 # COMMANDS TOBE EXECUTED
 # Command to get Lower Bound

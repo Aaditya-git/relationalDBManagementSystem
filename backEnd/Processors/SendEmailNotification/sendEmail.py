@@ -45,11 +45,11 @@ def sendMailUsingSMTP():
     smtp_obj.sendmail(EMAIL_FROM, EMAIL_TO, msg.as_string())
     smtp_obj.quit()
 
-def sendMailUsingSMTPToUser(userEmail):
+def sendMailUsingSMTPToUser(userEmail,coName):
     # Create a multipart message
     msg = MIMEMultipart()
     body_part = MIMEText(MESSAGE_BODY, 'plain')
-    msg['Subject'] = EMAIL_SUBJECT.format(date.today())
+    msg['Subject'] = EMAIL_SUBJECT.format(coName,date.today())
     msg['From'] = EMAIL_FROM
     msg['To'] = getListOfStrings(userEmail)
     # Add body to email

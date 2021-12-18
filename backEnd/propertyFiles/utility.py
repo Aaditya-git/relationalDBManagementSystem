@@ -14,7 +14,7 @@ from django.core.files.storage import FileSystemStorage
 #===================================================================
 
 sys.path.append("C:\\Users\\lenovo\\data structure in python\\BE project\\relationalDBManagementSystem\\backEnd\\propertyFiles")
-from EnvironmentVariables import RENAMED,InputFolderPath,MandatoryDataToBeSent
+from EnvironmentVariables import RENAMED,InputFolderPath,MandatoryDataToBeSent,marks
 
 #=================================================================
 #================== PII Data Generation ==========================
@@ -111,3 +111,13 @@ def saveFile(inputFileObject,fileLocation):
         filename = fs.save(inputFileObject.name, inputFileObject)
         file_url = fs.url(filename)
         renameFile()
+
+#==================================================================
+#================== Handelling Marks Query ========================
+#==================================================================
+def handleMarks(alist):
+    if 'tenthGrade' in alist:
+        alist = alist + marks
+        return alist
+    else:
+        return alist
