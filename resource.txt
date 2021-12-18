@@ -1,3 +1,41 @@
-Start Django Server - django-admin startproject mysite
-Run Server - cd to relationalDBManagement
+Before Running any script,
+  1. Copy addProjectPath.pth file to C:\Users\<YOUR_USERNAME>\AppData\Local\Programs\Python\Python39\Lib\site-packages
+
+Before Pushing your Code:
+ 1. Run this from GitBash/Linux Terminal - find . | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf
+
+To Start Django Project - django-admin startproject mysite
+To run Run Django Server -
+              cd to relationalDBManagement
               python manage.py runserver
+
+Connect to EC2 -
+cd <TO YOUR KEY PATH>
+chmod 400 <YOUR_KEY_NAME>.pem
+ssh -i “<YOUR KEY NAME>.pem” <YOUR PUBLIC DNS>.compute.amazonaws.com
+OR USE PUTTY :)
+
+Start a EC2 and Install Jenkins -
+1. https://www.jenkins.io/doc/tutorials/tutorial-for-installing-jenkins-on-AWS/
+2. Resolve Error for Daemonize -https://exerror.com/error-package-jenkins-2-306-1-1-noarch-jenkins-requires-daemonize/
+3. If Site is not reachable Open 8080 port in inbound rules
+
+For Manas -
+Connect to EC2 - https://ap-south-1.console.aws.amazon.com/ec2/v2/home?region=ap-south-1#SecurityGroup:group-id=sg-055ab5211bb48590a
+Open EC2 - https://ap-south-1.console.aws.amazon.com/ec2/v2/connect/ec2-user/i-06e54541b848e7164
+Jenkins URL - http://ec2-13-126-96-33.ap-south-1.compute.amazonaws.com:8080/
+Sudoers Error -
+sudo su
+vi /usr/sbin/visudo
+yourusername ALL=(ALL) ALL
+
+Install SQL - https://stackoverflow.com/questions/53712228/no-package-msyql-server-available
+https://towardsdatascience.com/running-mysql-databases-on-aws-ec2-a-tutorial-for-beginners-4301faa0c247
+
+
+
+pip3 install cryptography
+pip3 install mysql-connector
+pip3 install mysql-connector-python
+pip3 install Django
+pip3 install pandas
