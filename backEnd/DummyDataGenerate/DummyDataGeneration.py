@@ -7,13 +7,14 @@ from pandas import DataFrame
 
 # APPENDING PATH FOR IMPORTING Libraries
 sys.path.append("C:\\Users\\lenovo\\data structure in python\\BE project\\relationalDBManagementSystem\\backEnd\\propertyFiles")
-sys.path.append("C:\\Users\\lenovo\\data structure in python\\BE project\\relationalDBManagementSystem\\backEnd\\SQLConnectors")
+# sys.path.append("C:\\Users\\lenovo\\data structure in python\\BE project\\relationalDBManagementSystem\\backEnd\\SQLConnectors")
 sys.path.append("C:\\Users\\lenovo\\data structure in python\\BE project\\relationalDBManagementSystem\\backEnd\\Processors\\Encrypters")
 sys.path.append("C:\\Users\\lenovo\\data structure in python\\BE project\\relationalDBManagementSystem\\backEnd\\Processors\\SendEmailNotification")
 sys.path.append("C:\\Users\\lenovo\\data structure in python\\BE project\\relationalDBManagementSystem\\backEnd\\DummyDataGenerate")
 
 # Importing User defined Modules
-from sqlConnector import *
+# from sqlConnector import *
+from backEnd.SQLConnectors.sqlConnector import executeGetCommand, executeInsertCommand
 from dummyDataPayload import *
 # from encryDecryFn import fillEnctryptedValues
 from utility import *
