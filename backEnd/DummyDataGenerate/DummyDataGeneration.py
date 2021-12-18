@@ -13,7 +13,7 @@ sys.path.append("C:\\Users\\lenovo\\data structure in python\\BE project\\relati
 sys.path.append("C:\\Users\\lenovo\\data structure in python\\BE project\\relationalDBManagementSystem\\backEnd\\DummyDataGenerate")
 
 # Importing User defined Modules
-from sqlConnector import *
+from sqlConnector import executeGetCommand, executeInsertCommand
 from dummyDataPayload import *
 # from encryDecryFn import fillEnctryptedValues
 from utility import *
